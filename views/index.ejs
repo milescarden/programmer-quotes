@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programmer Quotes</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Programmer Quotes</h1>
+  
+  <button id="generateQuoteBtn">Generate Quote</button>
+  
+  <div id="quoteResult"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.0.0/fetch.min.js"></script>
+  <script>
+    document.getElementById('generateQuoteBtn').addEventListener('click', () => {
+      fetch('/api/quote')
+        .then(response => response.json())
+        .then(quote => {
+          const quoteHtml = `<p><strong>${quote.quote}</strong></p><p>${quote.author}</p>`;
+          document.getElementById('quoteResult').innerHTML = quoteHtml;
+        })
+        .catch(error => {
+          console.error('Error fetching quote:', error);
+          document.getElementById('quoteResult').innerHTML = '<p>Failed to fetch quote.</p>';
+        });
+    });
+  </script>
+</body>
+</html>
